@@ -1,2 +1,25 @@
 ﻿  Main.cpp
+c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\vector3.h(82): warning C4244: 'return': conversión de 'double' a 'type'; posible pérdida de datos
+          with
+          [
+              type=int
+          ]
+  c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\vector3.h(81): note: durante la compilación de la función miembro de plantilla clase de 'type Vector3<type>::distance(const Vector3<type> &) const'
+          with
+          [
+              type=int
+          ]
+  c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\main.cpp(47): note: vea la referencia a la creación de instancias de plantilla de función 'type Vector3<type>::distance(const Vector3<type> &) const' que se está compilando
+          with
+          [
+              type=int
+          ]
+  c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\main.cpp(11): note: vea la referencia a la creación de instancias de plantilla clase de 'Vector3<int>' que se está compilando
+c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\vector3.h(66): warning C4244: 'inicializando': conversión de 'double' a 'type'; posible pérdida de datos
+          with
+          [
+              type=int
+          ]
+  c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\vector3.h(65): note: durante la compilación de la función miembro de plantilla clase de 'Vector3<int> Vector3<int>::Normalize(void) const'
+  c:\users\sebas\documents\github\dev-2018\vector3\vector3\vector3\main.cpp(38): note: vea la referencia a la creación de instancias de plantilla de función 'Vector3<int> Vector3<int>::Normalize(void) const' que se está compilando
   vector3.vcxproj -> C:\Users\Sebas\Documents\GitHub\dev-2018\vector3\vector3\Debug\vector3.exe

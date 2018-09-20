@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-  <name>Game Dev 2018</name>
+  <app>
+    <title> Game dev 2018</title>
+    <organization>UPC</organization>
+  </app>
+  <renderer>
+    <vsync value="false"/>
+  </renderer>
+  <window>
+    <Title win_title="SuperGame2018"/>
+    <height value="800"/>
+    <width  value="800"/>
+    <scale  value="1"/>
+  </window>
+  <audio>
+    <volume value="100"/>
+  </audio>
 </config>

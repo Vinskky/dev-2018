@@ -85,7 +85,7 @@ class Vector3
 
 		//Utils
 
-		void PrintVector()
+		void PrintVector()const
 		{
 			std::cout << x <<","<<  y <<","<<  z << std::endl;
 		}

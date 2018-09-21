@@ -8,6 +8,7 @@
 struct _Mix_Music;
 struct Mix_Chunk;
 
+
 class j1Audio : public j1Module
 {
 public:
@@ -18,7 +19,7 @@ public:
 	virtual ~j1Audio();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before quitting
 	bool CleanUp();
@@ -32,10 +33,12 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	int music_volume;
 private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
+	
 };
 
 #endif // __j1AUDIO_H__

@@ -80,10 +80,13 @@ private:
 	// a xml_document to store the while config file and
 	// a xml_node to read specific branches of the xml
 	pugi::xml_document  config_doc;
-	
+	pugi::xml_node		app_node;
 
 	int					argc;
 	char**				args;
+
+	p2SString*			title;
+	p2SString*			organization;
 };
 
 extern j1App* App; 

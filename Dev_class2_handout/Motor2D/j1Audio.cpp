@@ -19,12 +19,15 @@ j1Audio::~j1Audio()
 {}
 
 // Called before render is available
-bool j1Audio::Awake()
+bool j1Audio::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
 
+	if(config != nullptr)
+		music_volume = config.child("volume").attribute("value").as_int();
+	
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -87,9 +90,11 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 
 	if(!active)
 		return false;
+	
 
 	if(music != NULL)
 	{
+		
 		if(fade_time > 0.0f)
 		{
 			Mix_FadeOutMusic(int(fade_time * 1000.0f));
@@ -104,6 +109,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	}
 
 	music = Mix_LoadMUS(path);
+	Mix_VolumeMusic(music_volume);
 
 	if(music == NULL)
 	{

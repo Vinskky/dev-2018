@@ -8,12 +8,16 @@
     <vsync value="false"/>
   </renderer>
   <window>
-    <Title win_title="SuperGame2018"/>
-    <height value="800"/>
-    <width  value="800"/>
-    <scale  value="1"/>
+    <Title                      win_title="SuperGame2018"/>
+    <height                     value="1024"/>
+    <width                      value="768"/>
+    <scale                      value="1"/>
+    <fullscreen                 value="false"/>
+    <borderless                 value="false"/>
+    <resizable                  value="true"/>
+    <fullscreen_window          value="false"/>
   </window>
   <audio>
-    <volume value="100"/>
+    <volume value="50"/> <!--Volume only can go from 0 to 128-->
   </audio>
 </config>

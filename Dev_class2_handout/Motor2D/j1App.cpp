@@ -63,10 +63,18 @@ bool j1App::Awake()
 	// If everything goes well, load the top tag inside the xml_node property
 	// created in the last TODO
 	pugi::xml_parse_result result = config_doc.load_file("config.xml");
-	if(result == NULL)
+	if (result == NULL)
+	{
 		LOG("could not load xml file from config.xml", result.description());
-	config_node = config_doc.child("config");
-	
+	}
+	else
+	{
+		config_node = config_doc.child("config");
+		app_node = config_node.child("app");
+	}
+		
+	//title->create(app_node.child("title").child_value());
+	//organization->create(app_node.child("organization").child_value());
 
 	bool ret = true;
 
@@ -79,7 +87,7 @@ bool j1App::Awake()
 		// If the section with the module name exist in config.xml, fill the pointer with the address of a valid xml_node
 		// that can be used to read all variables from that section. Send nullptr if the section does not exist in config.xml
 
-		ret = item->data->Awake();
+		ret = item->data->Awake(config_node.child(item->data->name.GetString()));
 		item = item->next;
 	}
 

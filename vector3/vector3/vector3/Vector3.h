@@ -66,6 +66,10 @@ class Vector3
 			type absolute_value = (sqrt((x*x) + (y*y) + (z*z)));
 
 			return (Vector3(x / absolute_value, y / absolute_value, z / absolute_value));
+			/*in case normalized vector has to apply to the vector, the method will be void and not const*/
+			/*x =/ absolute_value;*/
+			/*y =/ absoulte_value;*/
+			/*z =/ absoulte_value;*/
 		}
 		void Zero()
 		{			

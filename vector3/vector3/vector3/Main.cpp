@@ -8,10 +8,10 @@ int main()
 {
 	//constructors
 	std::cout << "constructors for 4 types of vectors" << std::endl;
-	Vector3<int> vect1;
-	Vector3<int> vect2(1, 2, 3);
-	Vector3<int> vect3(vect1);
-	Vector3<int> vect4(4, 3, 2);
+	Vector3<float> vect1;
+	Vector3<float> vect2(1.0f, 2.0f, 3.0f);
+	Vector3<float> vect3(vect1);
+	Vector3<float> vect4(4.0f, 3.0f, 2.0f);
 	vect1.PrintVector();
 	vect2.PrintVector();
 	vect3.PrintVector();
@@ -31,11 +31,11 @@ int main()
 
 	//operator +
 	std::cout << "operator + with a new vector (4,5,2) " << std::endl;
-	Vector3<int> a(4, 5, 2);
+	Vector3<float> a(4.0f, 5.0f, 2.0f);
 	a = vect1 + vect2;
 	a.PrintVector();
 	std::cout << "vect4 normalized" << std::endl;
-	a = vect4.Normalize();
+	a = vect4.IsNormalized();
 	a.PrintVector();
 	std::cout << "vect4 normalized set to 0" << std::endl;
 	a.Zero();

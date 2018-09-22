@@ -2,37 +2,19 @@
 #define _VECTOR3_H_
 #include <math.h>
 
-template<class type>
+template<class TYPE>
 class Vector3
 {
-	private:
-		type x, y, z = 0;
-
 	public:
+		
+		TYPE x, y, z = 0.0f;
 		//constructors
-		Vector3<type>(const type &_x, const type &_y, const type &_z): x(_x), y(_y), z(_z) {}
-		Vector3<type>(const Vector3<type> &vector): x(vector.x), y(vector.y), z(vector.z)  {}
-		Vector3<type>(): x(0),y(0),z(0){}
+		Vector3(const TYPE &_x, const TYPE &_y, const TYPE &_z): x(_x), y(_y), z(_z) {}
+		Vector3(const Vector3 &vector): x(vector.x), y(vector.y), z(vector.z)  {}
+		Vector3(){}
 
 		//destructor
-		~Vector3<type>(){}
-
-		//Getters
-		type GetVectX()const
-		{
-			return x;
-		}
-
-		type GetVectY()const
-		{
-			return y;
-		}
-
-		type GetVectZ()const
-		{
-			return x;
-		}
-
+		~Vector3(){}
 
 		//operators
 		Vector3 operator + (const Vector3 &vector) const 
@@ -61,31 +43,35 @@ class Vector3
 		}
 
 		//methods
-		Vector3<type> Normalize()const
+		Vector3 IsNormalized()const
 		{
-			type absolute_value = (sqrt((x*x) + (y*y) + (z*z)));
-
+			TYPE absolute_value = (sqrt((x*x) + (y*y) + (z*z)));
 			return (Vector3(x / absolute_value, y / absolute_value, z / absolute_value));
-			/*in case normalized vector has to apply to the vector, the method will be void and not const*/
-			/*x =/ absolute_value;*/
-			/*y =/ absoulte_value;*/
-			/*z =/ absoulte_value;*/
+		}
+		void Normalize()
+		{
+			TYPE absolute_value = (sqrt((x*x) + (y*y) + (z*z)));
+			x =/ absolute_value;
+			y =/ absolute_value;
+			z =/ absolute_value;
 		}
 		void Zero()
 		{			
-			x = 0;
-			y = 0;
-			z = 0;
+			x = y = z = 0.0f;
 		}
 		bool IsZero()const
 		{
-			return (x == 0 && y == 0 && z == 0);
+			return (x == 0.0f && y == 0.0f && z == 0.0f);
 		}
-		type distance(const Vector3 &vect1)const
+		TYPE distance(const Vector3 &vect1)const
 		{
 			return (sqrt(((x - vect1.x)*(x - vect1.x)) + ((y - vect1.y)*(y - vect1.y)) + ((z - vect1.z)*(z - vect1.z))));
 		}
 
+		Vector3 distance_squared(const Vector3 &vect)const
+		{
+
+		}
 
 		//Utils
 

@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="MyString.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,8 @@ public:
 	// that can be called anytime, even if they 
 	// will one execute by the very end of the frame
 	// Load / Save
-
+	void LoadGame()const;
+	void SaveGame()const;
 private:
 
 	// Load config file

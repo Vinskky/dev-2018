@@ -68,9 +68,9 @@ class Vector3
 			return (sqrt(((x - vect1.x)*(x - vect1.x)) + ((y - vect1.y)*(y - vect1.y)) + ((z - vect1.z)*(z - vect1.z))));
 		}
 
-		Vector3 distance_squared(const Vector3 &vect)const
+		TYPE distance_squared(const Vector3 &vect)const
 		{
-
+			return(((x - vect1.x)*(x - vect1.x)) + ((y - vect1.y)*(y - vect1.y)) + ((z - vect1.z)*(z - vect1.z)));
 		}
 
 		//Utils

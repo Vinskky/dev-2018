@@ -48,13 +48,15 @@ public:
 	// that can be called anytime, even if they 
 	// will one execute by the very end of the frame
 	// Load / Save
-	void LoadGame();
-	void SaveGame()const;
+	bool LoadGame();
+	bool SaveGame()const;
 private:
 
 	// Load config file
 	bool LoadConfig();
 	bool LoadXmlFile();
+	bool SaveCurrentState()const;
+
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
@@ -91,8 +93,12 @@ private:
 	int					argc;
 	char**				args;
 
+	mutable bool		want_to_save;
+	bool				want_to_load;
 	p2SString			title;
 	p2SString			organization;
+	p2SString			load_game;
+	mutable p2SString	save_game;
 
 };
 

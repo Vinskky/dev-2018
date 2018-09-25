@@ -60,6 +60,9 @@ public:
 	}
 
 	// TODO 3: Create new virtual methods to Load and Save
+	virtual void Save(pugi::xml_node&){}
+
+	virtual void Load(pugi::xml_node&){}
 
 public:
 

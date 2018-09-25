@@ -313,5 +313,26 @@ bool j1App::LoadXmlFile()
 
 bool j1App::SaveCurrentState()const
 {
+	bool ret = true;
 
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	root = data.append_child("save");
+	p2List_item<j1Module*>* item = modules.start;
+
+	while (item != NULL && ret == true)
+	{
+		ret = item->data->Save(root.child(item->data->name.GetString()));
+		item = item->next;
+	}
+	if (ret == true)
+	{
+		data.save_file("savegame.xml");
+		LOG("saving game completed");
+	}
+	else
+		LOG("Something went wrong");
+	want_to_save = false;
+	return ret;
 }

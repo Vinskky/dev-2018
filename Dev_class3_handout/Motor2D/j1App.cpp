@@ -153,9 +153,9 @@ void j1App::FinishUpdate()
 {
 	// TODO 1: This is a good place to call load / Save functions
 	if(want_to_save == true)
-		SaveGame();
+		SaveCurrentState();
 	if(want_to_load == true)
-		LoadGame();
+		LoadXmlFile();
 }
 
 // Call modules before each loop iteration

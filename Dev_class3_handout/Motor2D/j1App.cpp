@@ -313,31 +313,5 @@ bool j1App::LoadXmlFile()
 
 bool j1App::SaveCurrentState()const
 {
-	bool ret = false;
-	pugi::xml_document data;
-	pugi::xml_node root;
-
-	root = data.append_child("config");
-
-
-	p2List_item<j1Module*>* item = modules.start;
-
-	while (item != NULL && ret == true)
-	{
-		ret = item->data->Save(root.append_child(item->data->name.GetString()));
-		item = item->next;
-	}
-
-	if (ret == true)
-	{
-		data.save_file(save_game.GetString());
-		LOG("... finished saving", );
-	}
-	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
-
-	data.reset();
-	want_to_save = false;
-	return ret;
 
 }

@@ -21,11 +21,7 @@ public:
 	{
 		if (string != nullptr)
 		{
-			int string_size;
-			for (int i = 0; string[i] != '\0'; i++)
-			{
-				string_size++;
-			}
+			int string_size = StringSize(string);
 			Alloc(string_size);
 			strcpy_s(str, string_size, string);
 		}else
@@ -47,9 +43,30 @@ public:
 	}
 
 	//operators
-	MyString operator = (const char* string)const
+	MyString operator = (const char* string)
 	{
+		if (string != nullptr)
+		{
+			int string_size = StringSize(string);
+			Alloc(string_size);
+			strcpy_s(str, string_size, string);
+			return str;
+		}
+		else
+		{
+			std::cout << "char * string its null, you can't assign it" << std::endl;
+			return nullptr;
+		}
+	}
 
+	int StringSize(const char* string)
+	{
+		int string_size;
+		for (int i = 0; string[i] != '\0'; i++)
+		{
+			string_size++;
+		}
+		return string_size;
 	}
 
 private:

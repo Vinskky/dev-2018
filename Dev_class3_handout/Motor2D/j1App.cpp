@@ -152,9 +152,9 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	// TODO 1: This is a good place to call load / Save functions
-	LoadGame();
-
 	SaveGame();
+	
+	LoadGame();
 }
 
 // Call modules before each loop iteration
@@ -265,9 +265,8 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-void j1App::LoadGame()const
+void j1App::LoadGame()
 {
-
 }
 
 void j1App::SaveGame()const
@@ -278,6 +277,10 @@ void j1App::SaveGame()const
 
 // TODO 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
+bool j1App::LoadXmlFile()
+{
+	bool ret = true;
 
+}
 // TODO 7: Create a method to save the current state
 

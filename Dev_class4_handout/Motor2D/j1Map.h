@@ -26,7 +26,12 @@ enum Orientation
 	RIGHT_UP,
 	RIGHT_DOWN
 };
-
+struct Layer
+{
+	p2SString		name = nullptr;
+	int				width = 0;
+	int				height = 0;
+};
 enum MapType
 {
 	ISOMETRIC = 0,
@@ -43,6 +48,7 @@ struct MapNode
 	int						tileheight = 0;
 	int						nextobjectid= 0;
 	p2List<Tileset*>		tileset_list;
+	p2List<Layer*>			layer_list;
 };
 
 // ----------------------------------------------------
@@ -70,6 +76,7 @@ public:
 private:
 	bool LoadMap();
 	bool LoadSpecificTileset(pugi::xml_node &node_tileset, Tileset* set);
+	bool LoadLayer(pugi::xml_node &node_layer, Layer* set);
 public:
 
 	// TODO 1: Add your struct for map info as public for now

@@ -57,6 +57,14 @@ bool j1Map::CleanUp()
 		item = item->next;
 	}
 
+	//releasing layers
+	p2List_item<Layer*>* layer_item = map.layer_list.start;
+	if (layer_item != NULL)
+	{
+		RELEASE(layer_item);
+		layer_item = layer_item->next;
+	}
+
 	map_file.reset();
 
 	return true;
@@ -97,6 +105,18 @@ bool j1Map::Load(const char* file_name)
 		map.tileset_list.add(set);
 	}
 
+	//Loading layers
+	pugi::xml_node layers;
+
+	for (layers = map_file.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
+	{
+		Layer* set = new Layer();
+		if (ret == true)
+		{
+			ret = LoadLayer(layers, set);
+		}
+		map.layer_list.add(set);
+	}
 
 	if(ret == true)
 	{
@@ -114,6 +134,14 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile_width: %d tile_height %d", item->data->tilewidth, item->data->tileheight);
 			LOG("spacing: %d margin: %d", item->data->spacing, item->data->margin);
 			item = item->next;
+		}
+		p2List_item<Layer*>* layer_item = map.layer_list.start;
+		while (layer_item != NULL)
+		{
+			LOG("Layer ----");
+			LOG("name: %s", layer_item->data->name.GetString());
+			LOG("layer_heigth: %d layer_width: %d", layer_item->data->height, layer_item->data->width);
+			layer_item = layer_item->next;
 		}
 	}
 
@@ -190,5 +218,14 @@ bool j1Map::LoadSpecificTileset(pugi::xml_node & node_tileset, Tileset * set)
 	image += node_tileset.child("image").attribute("source").as_string();
 	set->texture = App->tex->Load(image.GetString());
 	LOG("image loaded from XML: %s", image.GetString());
+	return ret;
+}
+
+bool j1Map::LoadLayer(pugi::xml_node & node_layer, Layer * set)
+{
+	bool ret = true;
+	set->name.create(node_layer.attribute("name").as_string());
+	set->height = node_layer.attribute("height").as_int();
+	set->width = node_layer.attribute("width").as_int();
 	return ret;
 }

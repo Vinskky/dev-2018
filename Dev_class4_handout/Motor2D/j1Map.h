@@ -11,12 +11,13 @@
 // ----------------------------------------------------
 struct Tileset
 {
-	int				firstgid;
-	p2SString		name;
-	int				tilewidth;
-	int				tileheight;
-	int				spacing;
-	int				margin;
+	int				firstgid = 0;
+	p2SString		name = nullptr;
+	int				tilewidth = 0;
+	int				tileheight = 0;
+	int				spacing = 0;
+	int				margin = 0;
+	SDL_Texture*	texture = nullptr;
 };
 enum Orientation
 {
@@ -36,12 +37,12 @@ struct MapNode
 {
 	Orientation				map_orientation;
 	MapType					renderorder;
-	int						width;
-	int						height;
-	int						tilewidth;
-	int						tileheight;
-	int						nextobjectid;
-	p2List<Tileset*>*		tileset_list;
+	int						width = 0;
+	int						height = 0;
+	int						tilewidth = 0;
+	int						tileheight = 0;
+	int						nextobjectid= 0;
+	p2List<Tileset*>		tileset_list;
 };
 
 // ----------------------------------------------------

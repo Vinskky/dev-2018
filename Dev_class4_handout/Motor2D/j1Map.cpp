@@ -33,7 +33,13 @@ void j1Map::Draw()
 
 	// TODO 6: Iterate all tilesets and draw all their 
 	// images in 0,0 (you should have only one tileset for now)
+	p2List_item<Tileset*>* item = map.tileset_list.start;
 
+	while (item != NULL)
+	{
+		App->render->Blit(item->data->texture, 0, 0);
+		item = item->next;
+	}
 }
 
 // Called before quitting
@@ -43,7 +49,7 @@ bool j1Map::CleanUp()
 	// TODO 2: Make sure you clean up any memory allocated
 	// from tilesets / map
 	p2List_item<Tileset*>* item;
-	item = map.tileset_list->start;
+	item = map.tileset_list.start;
 	
 	if (item != NULL)
 	{
@@ -85,8 +91,10 @@ bool j1Map::Load(const char* file_name)
 	{
 		Tileset* set = new Tileset();
 		if (ret == true)
+		{
 			ret = LoadSpecificTileset(tileset, set);
-		map.tileset_list->add(set);
+		}
+		map.tileset_list.add(set);
 	}
 
 
@@ -98,13 +106,14 @@ bool j1Map::Load(const char* file_name)
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", map.width, map.height);
 		LOG("tile_width: %s tile_height: %d", map.tilewidth, map.tileheight);
-		p2List_item<Tileset*>* item = map.tileset_list->start;
+		p2List_item<Tileset*>* item = map.tileset_list.start;
 		while (item != NULL)
 		{
 			LOG("Tileset ----");
 			LOG("name: %s firstgid:%d", item->data->name.GetString(), item->data->firstgid);
 			LOG("tile_width: %d tile_height %d", item->data->tilewidth, item->data->tileheight);
 			LOG("spacing: %d margin: %d", item->data->spacing, item->data->margin);
+			item = item->next;
 		}
 	}
 
@@ -126,11 +135,11 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
-		map.height = map_node.attribute("height").as_int;
-		map.width = map_node.attribute("width").as_int;
-		map.tileheight = map_node.attribute("tileheight").as_int;
-		map.tilewidth = map_node.attribute("tilewidht").as_int;
-		map.nextobjectid = map_node.attribute("nextobjectid").as_int;
+		map.height = map_node.attribute("height").as_int();
+		map.width = map_node.attribute("width").as_int();
+		map.tileheight = map_node.attribute("tileheight").as_int();
+		map.tilewidth = map_node.attribute("tilewidht").as_int();
+		map.nextobjectid = map_node.attribute("nextobjectid").as_int();
 
 		p2SString map_type(map_node.attribute("orientation").as_string());
 		
@@ -177,5 +186,9 @@ bool j1Map::LoadSpecificTileset(pugi::xml_node & node_tileset, Tileset * set)
 	set->tileheight = node_tileset.attribute("tileheight").as_int();
 	set->tilewidth = node_tileset.attribute("tilewidth").as_int();
 
+	p2SString image = "maps/";
+	image += node_tileset.child("image").attribute("source").as_string();
+	set->texture = App->tex->Load(image.GetString());
+	LOG("image loaded from XML: %s", image.GetString());
 	return ret;
 }

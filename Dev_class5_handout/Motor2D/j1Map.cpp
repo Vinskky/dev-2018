@@ -15,6 +15,23 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 j1Map::~j1Map()
 {}
 
+TileSet * j1Map::GetTilsetId(int id) const
+{
+	TileSet* set = data.tilesets.start->data;
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	for (uint i = 0; i < data.tilesets.count(); i++)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+	return set;
+}
+
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
 {
@@ -32,24 +49,24 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	p2List_item<TileSet*>* item_tileset;
-	item_tileset = data.tilesets.start;
 	p2List_item<MapLayer*>* item;
 	item = data.layers.start;
+	MapLayer* layer = item->data;
 	for (int i = 0; i < item->data->height; i++)
 	{
 		for (int z = 0; z < item->data->width; z++)
 		{
-			if (item->data->data_list[i, z] != 0)
+			int tile_id = layer->Get(i, z);
+			if (tile_id > 0)
 			{
-				item->data->data_list[i * item->data->width + z] = Get(i, z);
-				SDL_Rect tile_rect = item_tileset->data->GetTileRect(item->data->data_list[i * item->data->width + z]);
+				TileSet* tileset = GetTilsetId(tile_id);
+				SDL_Rect tile_rect = tileset->GetTileRect(tile_id);
 				iPoint world_coord = MapToWorld(i, z);
-				App->render->Blit(item_tileset->data->texture, world_coord.x, world_coord.y);
-				item = item->next;
-			}		
+				App->render->Blit(tileset->texture, world_coord.x, world_coord.y, &tile_rect);
+			}
 		}
 	}
+
 		// TODO 9: Complete the draw function
 
 }
@@ -329,26 +346,31 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* set)
 {
 	bool ret = true;
-	memset(set->data_list, 0, sizeof(uint)*(set->height * set->width));
 	set->name.create(layer_node.attribute("name").as_string());
 	set->height = layer_node.attribute("height").as_int();
 	set->width = layer_node.attribute("width").as_int();
 
-	pugi::xml_node data_node;
-	
-	for (data_node = layer_node.child("data").child("tile"); data_node && ret; data_node = data_node.next_sibling("tile"))
+	pugi::xml_node data_node = layer_node.child("data");
+	if (data_node == NULL)
 	{
-		int i = 0;
-		set->data_list[i] = data_node.attribute("gid").as_uint();
-		i++;
+		LOG("Error parsing map xml file: Cannot find 'layer/data' tag");
+		ret = false;
+		RELEASE(set);
 	}
+	else
+	{
+		set->data_list = new uint[set->height*set->width];
+		memset(set->data_list, 0, sizeof(uint)*(set->height * set->width));
+		int i = 0;
+		for (pugi::xml_node tile = data_node.child("tile"); tile && ret; tile = tile.next_sibling("tile"))
+		{
+			set->data_list[i] = data_node.attribute("gid").as_uint();
+			i++;
+		}
+	}
+	
 
 	return ret;
-}
-
-inline uint Get(int x, int y) 
-{
-	return (x + 1)*(y + 1);
 }
 
 

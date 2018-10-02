@@ -16,6 +16,10 @@ struct MapLayer
 	int					height = 0;
 	uint*				data_list = nullptr;
 
+	inline uint Get(int x, int y)const
+	{
+		return data_list[(y*width) + x];
+	}
 	/*~MapLayer()
 	{
 		if (data_list != nullptr)
@@ -23,7 +27,7 @@ struct MapLayer
 	}*/
 };
 	// TODO 6: Short function to get the value of x,y
-inline uint Get(int x, int y);
+
 
 
 // ----------------------------------------------------
@@ -77,6 +81,9 @@ public:
 
 	// Destructor
 	virtual ~j1Map();
+
+	//get tileset from id
+	TileSet* GetTilsetId(int id)const;
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);

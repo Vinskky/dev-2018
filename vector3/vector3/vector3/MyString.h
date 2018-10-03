@@ -59,7 +59,13 @@ public:
 		}
 	}
 
-	int StringSize(const char* string)
+	MyString operator = (const MyString& string)
+	{
+		strcpy_s(str, string.GetSize(), string.GetStr);
+		return str;
+	}
+
+	unsigned int StringSize(const char* string)
 	{
 		int string_size;
 		for (int i = 0; string[i] != '\0'; i++)
@@ -69,6 +75,15 @@ public:
 		return string_size;
 	}
 
+	unsigned int GetSize()const
+	{
+		return size;
+	}
+
+	char* GetStr()const
+	{
+		return str;
+	}
 private:
 	void Alloc(unsigned int needed_memory)
 	{
